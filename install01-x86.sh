@@ -5,6 +5,7 @@ if [ $? -ne 0 ];then
 fi
 #snap install amazon-ssm-agent --classic
 date
+apt update -y && apt upgrade -y
 apt-get upgrade -qq
 #apt install snapd -y
 #snap install lxd

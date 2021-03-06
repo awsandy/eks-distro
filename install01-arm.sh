@@ -1,5 +1,6 @@
 #snap install amazon-ssm-agent --classic
 date
+apt update -y && apt upgrade -y
 apt-get upgrade -qq
 snap install helm --classic
 snap install kubectl --classic

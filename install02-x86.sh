@@ -24,6 +24,7 @@ find /var/lib/snapd/apparmor/profiles/snap.lxd.* -type f -exec sed -i 's|/usr/sb
 apparmor_parser -r /var/lib/snapd/apparmor/profiles/* -v
 lxc list
 # fix
+sleep 30
 for i in `lxc list | grep eth0 | awk '{print $6}'`;do
 ssh ubuntu@$i "sudo eks status" | grep "eks is not running" 2> /dev/null
 if [ $? -eq 0 ];then
