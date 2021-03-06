@@ -44,6 +44,7 @@ chmod 600 ~/.kube/config
 kubectl get nodes
 kubectl cluster-info
 kubectl get all -A
+date
 
 
 
