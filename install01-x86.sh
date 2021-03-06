@@ -1,5 +1,5 @@
 #snap install amazon-ssm-agent --classic
-apt update -y
+apt-get upgrade -qq
 #apt install snapd -y
 #snap install lxd
 wget https://apt.puppet.com/puppet-tools-release-focal.deb 
@@ -9,8 +9,6 @@ apt-get install puppet-bolt -y
 snap install helm --classic
 snap install kubectl --classic
 snap install jq --classic
-mkdir -p .kube
-touch .kube/config
 cat <<EOF | lxd init  --preseed
 storage_pools:
 - name: default
@@ -66,7 +64,7 @@ used_by: []
 EOF
 sed -ri "s'@@SSHPUB@@'$(cat ~/.ssh/id_rsa.pub)'" default.yaml
 cat default.yaml | lxc profile edit default
-cat <<EOF> .ssh/config
+cat <<EOF> ~/.ssh/config
 Host *
    StrictHostKeyChecking no
    UserKnownHostsFile=/dev/null
@@ -76,6 +74,7 @@ lxc profile create microk8s
 wget https://raw.githubusercontent.com/ubuntu/microk8s/master/tests/lxc/microk8s.profile -O microk8s.profile
 cat  microk8s.profile | lxc profile edit microk8s
 for i in {1..4}; do lxc launch -p default -p microk8s ubuntu:20.04 eksd$i; done
+sleep 5
 lxc ls
 # no arm bolt just yet for arm64
 # ssh to ubuntu@ip.of.lxd
