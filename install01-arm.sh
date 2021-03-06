@@ -1,5 +1,6 @@
 #snap install amazon-ssm-agent --classic
 date
+echo "This part takes ~2 minutes ...."
 apt update -y && apt upgrade -y
 apt-get upgrade -qq
 snap install helm --classic

@@ -3,6 +3,7 @@ if [ $? -ne 0 ];then
     echo "not arm64 architecture exiting ..."
     exit
 fi
+echo "This part takes ~30 minutes ...."
 date
 snap install snapcraft --classic
 git clone https://github.com/canonical/eks-snap.git
