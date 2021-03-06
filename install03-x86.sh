@@ -24,7 +24,7 @@ helm install traefik traefik/traefik
 kubectl apply -f "https://cloud.weave.works/k8s/scope.yaml?k8s-version=$(kubectl version | base64 | tr -d '\n')"
 #wget https://raw.githubusercontent.com/deep75/fcdemo3/master/deployment2.yml
 
-kubectl apply -f deployment2.yml
+kubectl apply -f deployment.yml
 kubectl apply -f ingress-v1-19.yml
 kubectl get po,svc -A
 
