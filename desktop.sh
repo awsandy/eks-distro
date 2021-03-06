@@ -1,8 +1,7 @@
 
 
-sudo apt install xubuntu-desktop -y
-sudo apt install xrdp -y
-
+sudo apt-get install xubuntu-desktop -qq
+sudo apt-get install xrdp -qq
 
 sudo adduser xrdp ssl-cert  
 # edit /etc/xrdp/startwm
