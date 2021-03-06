@@ -1,20 +1,21 @@
-#sudo apt-get install xubuntu-desktop -qq
-cd ~/eks-distro
-sudo apt-get update
+#sudo apt-get install xubuntu-desktop -y
+git clone https://github.com/awsandy/eks-distro.git
+cd eks-distro
+apt-get update
 
 #sudo DEBIAN_FRONTEND=noninteractive apt-get install xubuntu-core -qq -y
-sudo DEBIAN_FRONTEND=noninteractive apt-get install xfce4  -qq -y
-sudo apt-get install xrdp -qq
+DEBIAN_FRONTEND=noninteractive apt-get install xfce4  -qq -y
+apt-get install firefox -y
+#sudo apt-get install xubuntu-desktop -y
+apt-get install xrdp -y
 
-sudo adduser xrdp ssl-cert  
+adduser xrdp ssl-cert  
 # edit /etc/xrdp/startwm.sh
 # replace /etc/X11/Xsession lines with
 # startxfce4
 cp startwm.sh /etc/xrdp/startwm.sh
-sudo systemctl restart xrdp
-sudo ufw allow 3389
-
-
+systemctl restart xrdp
+ufw allow 3389
 passwd ubuntu << EOF
 linuxpassword0321
 linuxpassword0321
