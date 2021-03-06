@@ -7,7 +7,10 @@ date
 snap install snapcraft --classic
 git clone https://github.com/canonical/eks-snap.git
 cd eks-snap 
-time snapcraft --use-lxd
+FILE=eks_v1.18.9_arm64.snap
+if [ ! -f "$FILE" ]; then
+    time snapcraft --use-lxd
+fi
 date
 lxc ls
 # no arm bolt just yet for arm64
