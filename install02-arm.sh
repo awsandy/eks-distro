@@ -24,14 +24,15 @@ for i in `lxc list | grep eth0 | awk '{print $6}'`;do
 echo "copy to $i"
 scp eks_v1.18.9_arm64.snap ubuntu@$i:eks_v1.18.9_arm64.snap
 done
+lxc delete snapcraft-eks
 cd ~/eks-distro
 date
 for i in `lxc list | grep eth0 | awk '{print $6}'`;do
 echo "setting up EKS Distro on $i"
-ssh ubuntu@$i "sudo apt-get upgrade -qq"
-ssh ubuntu@$i "sudo snap remove lxd --purge"
-ssh ubuntu@$i "sudo snap install eks_v1.18.9_arm64.snap --classic --dangerous"
-ssh ubuntu@$i "sudo eks start"
+ssh ubuntu@$i "sudo apt-get upgrade -qq" 2> /dev/null
+ssh ubuntu@$i "sudo snap remove lxd --purge" 2> /dev/null
+ssh ubuntu@$i "sudo snap install eks_v1.18.9_arm64.snap --classic --dangerous" 2> /dev/null
+ssh ubuntu@$i "sudo eks start" 2> /dev/null
 echo "EKS Distro completed on $i"
 date
 done
@@ -44,7 +45,7 @@ lxc list
 # fix
 
 for i in `lxc list | grep eth0 | awk '{print $6}'`;do
-ssh ubuntu@$i "sudo eks status" | grep "eks is not running"
+ssh ubuntu@$i "sudo eks status" | grep "eks is not running" 2> /dev/null
 if [ $? -eq 0 ];then
     echo "ERROR: eks not running on $i exiting..."
     exit 
@@ -52,11 +53,11 @@ fi
 done
 
 jcmd=$(ssh ubuntu@eksd1 "sudo eks add-node" | grep eks | head -1)
-ssh ubuntu@eksd2 "sudo $jcmd"
+ssh ubuntu@eksd2 "sudo $jcmd" 2> /dev/null
 jcmd=$(ssh ubuntu@eksd1 "sudo eks add-node" | grep eks | head -1)
-ssh ubuntu@eksd3 "sudo $jcmd"
+ssh ubuntu@eksd3 "sudo $jcmd" 2> /dev/null
 jcmd=$(ssh ubuntu@eksd1 "sudo eks add-node" | grep eks | head -1)
-ssh ubuntu@eksd4 "sudo $jcmd"
+ssh ubuntu@eksd4 "sudo $jcmd" 2> /dev/null
 date
 mkdir -p ~/.kube
 touch ~/.kube/config

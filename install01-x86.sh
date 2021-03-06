@@ -1,3 +1,8 @@
+uname -a | grep x86_64 > /dev/null
+if [ $? -ne 0 ];then
+    echo "not x86_64 architecture exiting ..."
+    exit
+fi
 #snap install amazon-ssm-agent --classic
 date
 apt-get upgrade -qq
