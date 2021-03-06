@@ -1,4 +1,5 @@
 #snap install amazon-ssm-agent --classic
+date
 apt-get upgrade -qq
 #apt install snapd -y
 #snap install lxd
@@ -74,10 +75,10 @@ lxc profile create microk8s
 wget https://raw.githubusercontent.com/ubuntu/microk8s/master/tests/lxc/microk8s.profile -O microk8s.profile
 cat  microk8s.profile | lxc profile edit microk8s
 for i in {1..4}; do lxc launch -p default -p microk8s ubuntu:20.04 eksd$i; done
-sleep 5
+sleep 8
 lxc ls
-# no arm bolt just yet for arm64
-# ssh to ubuntu@ip.of.lxd
+date
+
 
 
 
