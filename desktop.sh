@@ -1,10 +1,9 @@
 #sudo apt-get install xubuntu-desktop -qq
 cd ~/eks-distro
-sudo apt update
 sudo apt-get update
 
 #sudo DEBIAN_FRONTEND=noninteractive apt-get install xubuntu-core -qq -y
-sudo apt-get install xfce4  -qq
+sudo DEBIAN_FRONTEND=noninteractive apt-get install xfce4  -qq -y
 sudo apt-get install xrdp -qq
 
 sudo adduser xrdp ssl-cert  
