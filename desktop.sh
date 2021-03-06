@@ -1,5 +1,5 @@
 #sudo apt-get install xubuntu-desktop -y
-git clone https://github.com/awsandy/eks-distro.git
+#git clone https://github.com/awsandy/eks-distro.git
 cd eks-distro
 apt-get update
 
