@@ -3,10 +3,10 @@ date
 apt-get upgrade -qq
 #apt install snapd -y
 #snap install lxd
-wget https://apt.puppet.com/puppet-tools-release-focal.deb 
-dpkg -i puppet-tools-release-focal.deb 
-apt-get update -y
-apt-get install puppet-bolt -y
+#wget https://apt.puppet.com/puppet-tools-release-focal.deb 
+#dpkg -i puppet-tools-release-focal.deb 
+#apt-get update -y
+#apt-get install puppet-bolt -y
 snap install helm --classic
 snap install kubectl --classic
 snap install jq --classic

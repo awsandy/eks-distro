@@ -1,7 +1,9 @@
 #snap install amazon-ssm-agent --classic
-apt update -y
-#apt install snapd -y
-#snap install lxd
+date
+apt-get upgrade -qq
+snap install helm --classic
+snap install kubectl --classic
+snap install jq --classic
 cat <<EOF | lxd init  --preseed
 storage_pools:
 - name: default
@@ -26,12 +28,12 @@ profiles:
       parent: lxdbr0
       type: nic
 EOF
-lxc network show lxdbr0
+#lxc network show lxdbr0
 #config:
 #  ipv4.address: 10.241.112.1/24
 #  ipv4.nat: "true"
-lxc storage show default
-lxc profile show default  > lxd-profile-default.yaml
+##lxc storage show default
+#lxc profile show default  > lxd-profile-default.yaml
 ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
 chmod 600 ~/.ssh/id*
 cat << EOF > default.yaml
@@ -57,16 +59,23 @@ used_by: []
 EOF
 sed -ri "s'@@SSHPUB@@'$(cat ~/.ssh/id_rsa.pub)'" default.yaml
 cat default.yaml | lxc profile edit default
-
+cat <<EOF> ~/.ssh/config
+Host *
+   StrictHostKeyChecking no
+   UserKnownHostsFile=/dev/null
+EOF
 lxc profile create microk8s
 wget https://raw.githubusercontent.com/ubuntu/microk8s/master/tests/lxc/microk8s.profile -O microk8s.profile
 cat  microk8s.profile | lxc profile edit microk8s
-for i in {1..2}; do lxc launch -p default -p microk8s ubuntu:20.10 eksd$i; done
+for i in {1..4}; do lxc launch -p default -p microk8s ubuntu:20.04 eksd$i; done
+sleep 8
 lxc ls
-# no arm bolt just yet
-# ssh to ubuntu@ip.of.lxd
+date
+snap install snapcraft --classic
+git clone https://github.com/canonical/eks-snap.git
+cd eks-snap 
 
-#wget https://apt.puppet.com/puppet-tools-release-focal.deb 
-#dpkg -i puppet-tools-release-focal.deb 
-#apt-get update -y
-#apt-get install puppet-bolt -y
+
+
+
+
