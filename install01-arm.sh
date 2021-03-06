@@ -71,9 +71,8 @@ for i in {1..4}; do lxc launch -p default -p microk8s ubuntu:20.04 eksd$i; done
 sleep 8
 lxc ls
 date
-snap install snapcraft --classic
-git clone https://github.com/canonical/eks-snap.git
-cd eks-snap 
+
+
 
 
 
