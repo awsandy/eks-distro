@@ -1,7 +1,8 @@
 
 
 #sudo apt-get install xubuntu-desktop -qq
-sudo apt-get install xubuntu-core -qq
+sudo apt update
+sudo apt-get install xubuntu-core -qq -y
 sudo apt-get install xrdp -qq
 
 sudo adduser xrdp ssl-cert  
