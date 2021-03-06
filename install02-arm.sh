@@ -1,3 +1,4 @@
+date
 snap install snapcraft --classic
 git clone https://github.com/canonical/eks-snap.git
 cd eks-snap 
@@ -27,8 +28,19 @@ echo "EKS Distro completed on $i"
 date
 done
 
+
+echo "fix apparmor bug"
+find /var/lib/snapd/apparmor/profiles/snap.lxd.* -type f -exec sed -i 's|/usr/sbin/aa-exec ux,|/usr/bin/aa-exec ux,|g' {} \; > /dev/null
+apparmor_parser -r /var/lib/snapd/apparmor/profiles/* -v
+lxc list
+# fix
+
 for i in `lxc list | grep eth0 | awk '{print $6}'`;do
-ssh ubuntu@$i "sudo eks status"
+ssh ubuntu@$i "sudo eks status" | grep "eks is not running"
+if [ $? -eq 0 ];then
+    echo "ERROR: eks not running on $i exiting..."
+    exit 
+fi
 done
 
 jcmd=$(ssh ubuntu@eksd1 "sudo eks add-node" | grep eks | head -1)
