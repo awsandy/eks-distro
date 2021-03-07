@@ -14,10 +14,7 @@ adduser xrdp ssl-cert
 cp startwm.sh /etc/xrdp/startwm.sh
 systemctl restart xrdp
 ufw allow 3389
-passwd ubuntu << EOF
-linuxpassword0321
-linuxpassword0321
-EOF
+echo "set a password for user ubuntu with the command:  passwd ubuntu" 
 
 
 

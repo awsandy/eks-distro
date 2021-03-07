@@ -19,7 +19,7 @@ echo "EKS Distro completed on $i"
 date
 done
 date
-echo "fix apparmor bug"
+echo "fixup for apparmor on our base OS as the microk8s.proile enabled it"
 find /var/lib/snapd/apparmor/profiles/snap.lxd.* -type f -exec sed -i 's|/usr/sbin/aa-exec ux,|/usr/bin/aa-exec ux,|g' {} \; > /dev/null
 apparmor_parser -r /var/lib/snapd/apparmor/profiles/* -v
 lxc list
