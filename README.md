@@ -70,3 +70,8 @@ bolt command run "sudo eks status" --user ubuntu --targets all --no-host-key-che
 ```
 bolt inventory show --targets <TARGET LIST> --detail
 ```
+
+
+Raspberry pi 4 / 8GB build
+install1-arm.sh - 7m 15s
+install2-arm.sh - (19:08:24 start)  

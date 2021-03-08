@@ -4,7 +4,7 @@ cd eks-distro
 apt-get update
 #sudo DEBIAN_FRONTEND=noninteractive apt-get install xubuntu-core -qq -y
 DEBIAN_FRONTEND=noninteractive apt-get install xfce4  -qq -y
-apt-get install firefox -y
+apt-get install firefox xfce4-terminal -y
 #sudo apt-get install xubuntu-desktop -y
 apt-get install xrdp -y
 adduser xrdp ssl-cert  
