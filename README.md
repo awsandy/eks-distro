@@ -74,4 +74,6 @@ bolt inventory show --targets <TARGET LIST> --detail
 
 Raspberry pi 4 / 8GB build
 install1-arm.sh - 7m 15s
-install2-arm.sh - (19:08:24 start)  
+install2-arm.sh - (19:08:24 start) 77m (nodes not ready)
+
+usb ssd next (etch it - firware > )
