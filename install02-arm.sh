@@ -15,10 +15,10 @@ echo "$i eksd$j" >> /etc/hosts
 j=`expr $j + 1` 
 done
 for i in `lxc list | grep eth0 | awk '{print $6}'`;do
+lxc delete snapcraft-eks
 echo "copy to $i"
 scp eks_v1.18.9_arm64.snap ubuntu@$i:eks_v1.18.9_arm64.snap 2> /dev/null
 done
-lxc delete snapcraft-eks
 cd ~/eks-distro
 date
 for i in `lxc list | grep eth0 | awk '{print $6}'`;do
@@ -30,6 +30,7 @@ ssh ubuntu@$i "sudo eks start" 2> /dev/null
 echo "EKS Distro completed on $i"
 date
 done
+
 
 
 echo "fix apparmor bug"
