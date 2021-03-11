@@ -1,6 +1,5 @@
 #sudo apt-get install xubuntu-desktop -y
 #git clone https://github.com/awsandy/eks-distro.git
-cd eks-distro
 apt-get update
 #sudo DEBIAN_FRONTEND=noninteractive apt-get install xubuntu-core -qq -y
 DEBIAN_FRONTEND=noninteractive apt-get install xfce4  -qq -y
