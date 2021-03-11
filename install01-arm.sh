@@ -66,9 +66,24 @@ Host *
    StrictHostKeyChecking no
    UserKnownHostsFile=/dev/null
 EOF
-lxc profile create microk8s
-wget https://raw.githubusercontent.com/ubuntu/microk8s/master/tests/lxc/microk8s.profile -O microk8s.profile
-cat  microk8s.profile | lxc profile edit microk8s
+echo "This part takes ~30 minutes ...."
+date
+snap install snapcraft --classic
+git clone https://github.com/canonical/eks-snap.git
+cd eks-snap 
+FILE=eks_v1.18.9_arm64.snap
+if [ ! -f "$FILE" ]; then
+    time snapcraft --use-lxd
+fi
+date
+lxc stop snapcraft-eks
+lxc delete snapcraft-eks
+
+
+
+
+
+
 for i in {1..4}; do lxc launch -p default -p microk8s ubuntu:20.04 eksd$i; done
 sleep 8
 lxc ls

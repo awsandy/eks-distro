@@ -3,16 +3,9 @@ if [ $? -ne 0 ];then
     echo "not arm64 architecture exiting ..."
     exit
 fi
-echo "This part takes ~30 minutes ...."
-date
-snap install snapcraft --classic
-git clone https://github.com/canonical/eks-snap.git
-cd eks-snap 
-FILE=eks_v1.18.9_arm64.snap
-if [ ! -f "$FILE" ]; then
-    time snapcraft --use-lxd
-fi
-date
+lxc profile create microk8s
+wget https://raw.githubusercontent.com/ubuntu/microk8s/master/tests/lxc/microk8s.profile -O microk8s.profile
+cat  microk8s.profile | lxc profile edit microk8s
 lxc ls
 # no arm bolt just yet for arm64
 # ssh to ubuntu@ip.of.lxd
