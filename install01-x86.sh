@@ -80,7 +80,7 @@ EOF
 lxc profile create microk8s
 wget https://raw.githubusercontent.com/ubuntu/microk8s/master/tests/lxc/microk8s.profile -O microk8s.profile
 cat  microk8s.profile | lxc profile edit microk8s
-for i in {1..4}; do lxc launch -p default -p microk8s ubuntu:20.04 eksd$i; done
+for i in {1..3}; do lxc launch -p default -p microk8s ubuntu:20.04 eksd$i; done
 sleep 8
 lxc ls
 date
