@@ -1,9 +1,7 @@
+for i in `lxc list | grep eth0 | grep -v eksd1 | awk '{print $6}'`;do
 jcmd=$(ssh ubuntu@eksd1 "sudo eks add-node" | grep eks | head -1)
-ssh ubuntu@eksd2 "sudo $jcmd" 2> /dev/null
-jcmd=$(ssh ubuntu@eksd1 "sudo eks add-node" | grep eks | head -1)
-ssh ubuntu@eksd3 "sudo $jcmd" 2> /dev/null
-jcmd=$(ssh ubuntu@eksd1 "sudo eks add-node" | grep eks | head -1)
-ssh ubuntu@eksd4 "sudo $jcmd" 2> /dev/null
+ssh ubuntu@$i "sudo $jcmd" 2> /dev/null
+done
 date
 mkdir -p ~/.kube
 touch ~/.kube/config
