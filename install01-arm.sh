@@ -76,15 +76,17 @@ if [ ! -f "$FILE" ]; then
     time snapcraft --use-lxd
 fi
 date
+echo "delete snapcraft lxd"
 lxc stop snapcraft-eks
 lxc delete snapcraft-eks
 
+lxc profile create microk8s
+wget https://raw.githubusercontent.com/ubuntu/microk8s/master/tests/lxc/microk8s.profile -O microk8s.profile
+cat  microk8s.profile | lxc profile edit microk8s
+lxc ls
 
-
-
-
-
-for i in {1..4}; do lxc launch -p default -p microk8s ubuntu:20.04 eksd$i; done
+echo "setup eks lxd's"
+for i in {1..3}; do lxc launch -p default -p microk8s ubuntu:20.04 eksd$i; done
 sleep 8
 lxc ls
 date

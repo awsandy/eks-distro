@@ -3,10 +3,7 @@ if [ $? -ne 0 ];then
     echo "not arm64 architecture exiting ..."
     exit
 fi
-lxc profile create microk8s
-wget https://raw.githubusercontent.com/ubuntu/microk8s/master/tests/lxc/microk8s.profile -O microk8s.profile
-cat  microk8s.profile | lxc profile edit microk8s
-lxc ls
+
 # no arm bolt just yet for arm64
 # ssh to ubuntu@ip.of.lxd
 j=1
