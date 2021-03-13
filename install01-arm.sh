@@ -3,6 +3,8 @@ date
 echo "This part takes ~2 minutes ...."
 apt update -y && apt upgrade -y
 apt-get upgrade -qq
+apt install apparmor-utils -y
+apt install net-tools -y
 snap install helm --classic
 snap install kubectl --classic
 snap install jq --classic
@@ -77,7 +79,7 @@ if [ ! -f "$FILE" ]; then
 fi
 date
 echo "delete snapcraft lxd"
-lxc stop snapcraft-eks
+lxc stop snapcraft-eks 2> /dev/null
 lxc delete snapcraft-eks
 
 lxc profile create microk8s
@@ -90,6 +92,12 @@ for i in {1..3}; do lxc launch -p default -p microk8s ubuntu:20.04 eksd$i; done
 sleep 8
 lxc ls
 date
+
+j=1
+for i in `lxc list | grep eth0 | awk '{print $6}'`;do
+echo "$i eksd$j" >> /etc/hosts
+j=`expr $j + 1` 
+done
 
 
 

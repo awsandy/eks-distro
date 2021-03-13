@@ -9,5 +9,4 @@ FILE=/boot/firmware/cmdline.txt
 if [  -f "$FILE" ]; then
     sed -i 's/fixrtc/fixrtc cgroup_enable=memory cgroup_memory=1/g' $FILE
 fi
-apt install net-tools
 echo "now reboot"
