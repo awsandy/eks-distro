@@ -4,13 +4,7 @@ if [ $? -ne 0 ];then
     exit
 fi
 
-# no arm bolt just yet for arm64
-# ssh to ubuntu@ip.of.lxd
-j=1
-for i in `lxc list | grep eth0 | awk '{print $6}'`;do
-echo "$i eksd$j" >> /etc/hosts
-j=`expr $j + 1` 
-done
+
 for i in `lxc list | grep eth0 | awk '{print $6}'`;do
 lxc delete snapcraft-eks
 echo "copy to $i"
@@ -44,18 +38,22 @@ if [ $? -eq 0 ];then
     ssh ubuntu@$i "sudo eks status" | grep "eks is not running" 2> /dev/null
 fi
 done
-
-jcmd=$(ssh ubuntu@eksd1 "sudo eks add-node" | grep eks | head -1)
-ssh ubuntu@eksd2 "sudo $jcmd" 2> /dev/null
-jcmd=$(ssh ubuntu@eksd1 "sudo eks add-node" | grep eks | head -1)
-ssh ubuntu@eksd3 "sudo $jcmd" 2> /dev/null
-jcmd=$(ssh ubuntu@eksd1 "sudo eks add-node" | grep eks | head -1)
-ssh ubuntu@eksd4 "sudo $jcmd" 2> /dev/null
+#
 date
+node1=`lxc list | grep eth0 | grep eksd1 | awk '{print $6}'`
+for i in `lxc list | grep eth0 | grep -v eksd1 | awk '{print $6}'`;do
+echo "getting join command from $node1"
+jcmd=$(ssh ubuntu@$node1 "sudo eks add-node" | grep eks | head -1)
+echo "joining $i to eksd1 $node1"
+ssh ubuntu@$i "sudo $jcmd" 2> /dev/null
+done
+date
+#
 mkdir -p ~/.kube
 touch ~/.kube/config
 ssh ubuntu@eksd1 "sudo eks config" > ~/.kube/config
 chmod 600 ~/.kube/config
+#
 kubectl get nodes
 kubectl cluster-info
 kubectl get all -A
