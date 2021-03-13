@@ -3,13 +3,13 @@ if [ $? -ne 0 ];then
     echo "not arm64 architecture exiting ..."
     exit
 fi
-
-
+#
 for i in `lxc list | grep eth0 | awk '{print $6}'`;do
 lxc delete snapcraft-eks
 echo "copy to $i"
 scp eks_v1.18.9_arm64.snap ubuntu@$i:eks_v1.18.9_arm64.snap 2> /dev/null
 done
+#
 cd ~/eks-distro
 date
 for i in `lxc list | grep eth0 | awk '{print $6}'`;do
@@ -21,7 +21,7 @@ ssh ubuntu@$i "sudo eks start" 2> /dev/null
 echo "EKS Distro completed on $i"
 date
 done
-
+#
 
 
 echo "fix apparmor bug"
